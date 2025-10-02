@@ -20,7 +20,8 @@ if (!OPENAI_API_KEY) {
 
 // ---- PROMPTS LIBRARY ----
 const PROMPTS = {
- Task: Create four types of multiple-choice questions using the 5 main language functions listed as "prompts" below. The goal is to test the learner’s ability to understand the language functions, meanings, and structures. Each language function has a set of instructions and contains examples that fulfill the criteria for creating the questions.
+  "1": `
+Task: Create four types of multiple-choice questions using the 5 main language functions listed as "prompts" below. The goal is to test the learner’s ability to understand the language functions, meanings, and structures. Each language function has a set of instructions and contains examples that fulfill the criteria for creating the questions.
 
 Prompt 1: Synonyms
 
@@ -55,7 +56,6 @@ b) He is asking for a cell phone.
 c) He is asking for a pay phone.
 d) He is asking for a service desk.
 
-
 3. Gap-fill Multiple Choice
 * Write a single sentence with one blank, where the correct word is either [word1] or [word2].
 * Provide four full-sentence answer choices that complete the sentence logically and grammatically.
@@ -68,7 +68,6 @@ b) slowly
 c) later
 d) eventually
 
-
 4. Underlined Target Word Multiple Choice
 * Write a single sentence where either [word1] or [word2] is underlined.
 * Provide four single-word answer choices that could replace the underlined word.
@@ -80,11 +79,12 @@ a) discuss
 b) complete
 c) read
 d) sent
+`,
 
+  "2": `
 Prompt 2: Opposites
 
 Task: Create four types of vocabulary multiple-choice questions using the word pair “[word1] / [word2],” where the learner must identify the opposite word in each case.
-
 
 1. Statement-based Opposite Multiple Choice
 * Write one complete sentence that naturally uses either [word1] or [word2].
@@ -133,11 +133,12 @@ a) It was curved.
 b) It was not curved.
 c) It was not very straight.
 d) It was a little busy.
+`,
 
+  "3": `
 Prompt 3: Definitions
 
 Task: Create four types of multiple-choice definition questions using the target word [word].
-
 
 1. Statement-based Definition Multiple Choice
 * Write a short clue sentence that describes the target word.
@@ -186,8 +187,10 @@ A. snap
 B. flash
 C. dim
 D. spark
+`,
 
-  Prompt 4: Themes
+  "4": `
+Prompt 4: Themes
 
 Task: Create four types of vocabulary multiple-choice questions using nouns that fit into clear themes or categories (e.g., bank, supermarket, library, church, hospital, stadium). The goal is for the learner to choose the correct thematic location or category.
 
@@ -231,11 +234,12 @@ a) alarm clock
 b) coat hanger
 c) bedroom closet
 d) electricity bill
+`,
 
+  "5": `
 Prompt 5: Grammar
 
 Task: Create four types of grammar multiple-choice questions using a target grammar structure.
-
 
 1. Statement-based Grammar Multiple Choice
 * Write one complete sentence using the target grammar.
@@ -250,7 +254,6 @@ a) It is the least expensive and the least reliable.
 b) It is the most expensive but also the least reliable.
 c) It is the most reliable and the least expensive.
 d) It is the least expensive but the most reliable.
-
 
 2. Dialogue-based Grammar Multiple Choice
 * Write a short two-person dialogue where one speaker naturally uses the target grammar.
@@ -286,9 +289,11 @@ Example:
 Choose the best sentence :
 a) The library is open in 8 p.m.
 b) The library are open since 8 p.m.
-c) The library  opens at  8 a.m. 
+c) The library opens at 8 a.m. 
 d) The library is opened from 8 p.m.
+`
 };
+
 
 // Helpers
 function buildPrompt(promptType, word1 = "", word2 = "", definition = "", grammar = "") {
@@ -390,4 +395,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
 });
+
 
