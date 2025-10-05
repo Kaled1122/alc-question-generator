@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "vercel-build": "node server.js"
   },
   "dependencies": {
     "express": "^4.19.2",
     "openai": "^4.68.4"
   }
 }
+
