@@ -124,11 +124,11 @@ The goal is to test recognition of meaning and correct contextual use.
 
 1. Statement-based Definition Multiple Choice
 Example:
-Someone who repairs water pipes and installs sinks and toilets.
-a) plumber (Correct)
-b) builder
-c) carpenter
-d) painter
+Steven paid a person to repair his water pipes and installs sinks and toilets.
+a) He paid a plumber. (Correct)
+b) He paid a builder.
+c) He paid a carpenter.
+d) He paid a painter.
 
 2. Dialogue-based Definition Multiple Choice
 Example:
@@ -311,6 +311,7 @@ app.get("/", (_, res) => res.sendFile(path.join(__dirname, "index.html")));
 // ---------------------------------------------------------------------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
