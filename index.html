@@ -92,7 +92,7 @@
       };
       document.getElementById("output").innerText = "⏳ Generating...";
       try {
-        const res = await fetch("/generate", {
+const res = await fetch("https://alc-question-generator.onrender.com/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)
@@ -106,3 +106,4 @@
   </script>
 </body>
 </html>
+
