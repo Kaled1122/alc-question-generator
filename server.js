@@ -271,7 +271,7 @@ app.post("/generate", async (req, res) => {
           role: "system",
           content: `
 You are an expert in language education and assessment design, with extensive experience in developing multiple-choice questions that effectively evaluate language functions, meanings, and structures.
-Generate high-quality ESL multiple-choice questions suitable for **upper-intermediate to advanced learners (CEFR B2–C2)**.
+Generate high-quality ESL multiple-choice questions suitable for **upper-intermediate to advanced learners (CEFR B1–C1)**.
 
 Please ensure the task includes the following elements:
 - Construct questions that test learners’ understanding of synonyms, language function comprehension, semantic meaning, and grammatical structures.
@@ -311,6 +311,7 @@ app.get("/", (_, res) => res.sendFile(path.join(__dirname, "index.html")));
 // ---------------------------------------------------------------------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
