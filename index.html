@@ -85,25 +85,34 @@
     async function generate() {
       const body = {
         promptType: Number(document.getElementById("promptType").value),
-        word1: document.getElementById("word1").value,
-        word2: document.getElementById("word2").value,
-        definition: document.getElementById("definition").value,
-        grammar: document.getElementById("grammar").value
+        word1: document.getElementById("word1").value.trim(),
+        word2: document.getElementById("word2").value.trim(),
+        definition: document.getElementById("definition").value.trim(),
+        grammar: document.getElementById("grammar").value.trim()
       };
-      document.getElementById("output").innerText = "⏳ Generating...";
+
+      const output = document.getElementById("output");
+      output.innerText = "⏳ Generating questions...";
+
       try {
-const res = await fetch("https://alc-question-generator.onrender.com/generate", {
+        // 🔗 Use your Render backend URL here
+        const res = await fetch("https://alc-question-generator.onrender.com/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)
         });
+
         const data = await res.json();
-        document.getElementById("output").innerText = data.output || data.message;
+
+        if (data.ok && data.output) {
+          output.innerText = data.output;
+        } else {
+          output.innerText = "⚠️ " + (data.error || data.message || "Unknown error");
+        }
       } catch (err) {
-        document.getElementById("output").innerText = "❌ " + err.message;
+        output.innerText = "❌ Network error: " + err.message;
       }
     }
   </script>
 </body>
 </html>
-
