@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ALC Question Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: #f6f7f9;
+      color: #111;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,.06);
+    }
+    label { display: block; margin-top: 14px; font-weight: 600; }
+    select, input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 18px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 10px;
+      background: #0b5fff;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:hover { background: #094ddb; }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 10px;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ALC Question Generator</h1>
+
+    <label for="promptType">Prompt Type</label>
+    <select id="promptType">
+      <option value="1">Prompt 1: Synonyms</option>
+      <option value="2">Prompt 2: Antonyms</option>
+      <option value="3">Prompt 3: Definitions</option>
+      <option value="4">Prompt 4: Themes</option>
+      <option value="5">Prompt 5: Grammar</option>
+    </select>
+
+    <label for="word1">Word 1</label>
+    <input id="word1" type="text" placeholder="Enter first word">
+
+    <label for="word2">Word 2</label>
+    <input id="word2" type="text" placeholder="Enter second word">
+
+    <label for="definition">Definition (Prompt 3 only)</label>
+    <input id="definition" type="text" placeholder="Enter definition">
+
+    <label for="grammar">Grammar Rule (Prompt 5 only)</label>
+    <textarea id="grammar" rows="3" placeholder="Enter grammar rule"></textarea>
+
+    <button onclick="generate()">Generate Questions</button>
+
+    <h2>Generated Output</h2>
+    <pre id="output">No output yet...</pre>
+  </div>
+
+  <script>
+    async function generate() {
+      const body = {
+        promptType: Number(document.getElementById("promptType").value),
+        word1: document.getElementById("word1").value,
+        word2: document.getElementById("word2").value,
+        definition: document.getElementById("definition").value,
+        grammar: document.getElementById("grammar").value
+      };
+      document.getElementById("output").innerText = "⏳ Generating...";
+      try {
+        const res = await fetch("/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        document.getElementById("output").innerText = data.output || data.message;
+      } catch (err) {
+        document.getElementById("output").innerText = "❌ " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
