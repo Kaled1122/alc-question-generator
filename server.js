@@ -34,7 +34,8 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 // ✅ Full Prompt Templates (with your original examples and formats)
 // ---------------------------------------------------------------------------
 const promptTemplates = {
- Prompt 1: Synonyms
+  1:
+Prompt 1: Synonyms
 
 Task: Create four types of multiple-choice questions using the word pair “[word1] / [word2].”
 The goal is to test learners’ understanding of synonym relationships and semantic similarity.
@@ -364,6 +365,7 @@ app.get("/", (_, res) => res.sendFile(path.join(__dirname, "index.html")));
 // ---------------------------------------------------------------------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
