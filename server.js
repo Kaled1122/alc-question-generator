@@ -34,45 +34,49 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 // ✅ Full Prompt Templates (with your original examples and formats)
 // ---------------------------------------------------------------------------
 const promptTemplates = {
-  1: `
-Prompt 1: Synonyms
+ Prompt 1: Synonyms
 
 Task: Create four types of multiple-choice questions using the word pair “[word1] / [word2].”
 The goal is to test learners’ understanding of synonym relationships and semantic similarity.
 
-1. Statement-based Multiple Choice
-Example:
-Most students thought the test was hard.
-a) The test was considered difficult. (Correct)
-b) The test was easy for everyone.
-c) The test was very long.
-d) The test wasn’t hard.
+Output Format:
+Section 1: Statement-based Multiple Choice
+Section 2: Dialogue-based Multiple Choice
+Section 3: Gap-fill Multiple Choice
+Section 4: Underlined Target Word Multiple Choice
+Each section must include:
+- One clear example question
+- Four labeled answer choices (a–d)
+- Mark the correct answer with (Correct)
+No extra explanations or context outside the questions.
 
-2. Dialogue-based Multiple Choice
-Example:
-James: I don’t have a cell phone with me. Is there a public phone around?
-David: Yes, there’s one by the entrance.
-Question: What is James asking for?
-a) He is asking for a private phone.
-b) He is asking for a cell phone.
-c) He is asking for a pay phone. (Correct)
-d) He is asking for a service desk.
+Section 2 Examples (for reference style):
+1.
+Ryan: I didn’t see you at the meeting yesterday.
+Adam: Yeah, I was absent because I wasn’t feeling well.
+Question: What is Adam explaining?
+a) He didn’t attend the meeting. (Correct)
+b) He arrived late to the meeting.
+c) He was the meeting host.
+d) He forgot there was a meeting.
 
-3. Gap-fill Multiple Choice
-Example:
-The officer acted ____ to control the situation, he didn’t hesitate.
-a) immediately (Correct)
-b) slowly
-c) later
-d) eventually
+2.
+Jake: You look exhausted. Want to rest for a while?
+Noah: No, I’ll continue working until I finish.
+Question: What will Noah probably do next?
+a) Stop working and relax.
+b) Keep working. (Correct)
+c) Ask someone to help him.
+d) Take a short break.
 
-4. Underlined Target Word Multiple Choice
-Example:
-John, fill out the form before submitting it.
-a) discuss
-b) complete (Correct)
-c) read
-d) sent
+3.
+Liam: The manager approved my vacation request!
+Ethan: That’s great!
+Question: What happened to Liam’s request?
+a) It was accepted. (Correct)
+b) It was rejected.
+c) It was delayed.
+d) It was ignored.
 `,
 
   2: `
@@ -81,114 +85,137 @@ Prompt 2: Opposites
 Task: Create four types of vocabulary multiple-choice questions using “[word1] / [word2].”
 The learner must identify the opposite word in each case.
 
-1. Statement-based Opposite Multiple Choice
-Example:
-That child is very sad.
-a) The child is not happy. (Correct)
-b) The child is very happy.
-c) The child is satisfied.
-d) The child is very tired.
+Output Format:
+Section 1: Statement-based Multiple Choice
+Section 2: Dialogue-based Multiple Choice
+Section 3: Gap-fill Multiple Choice
+Section 4: Underlined Target Word Multiple Choice
+Each section must include:
+- One clear example question
+- Four labeled answer choices (a–d)
+- Mark the correct answer with (Correct)
+No extra explanations or context outside the questions.
 
-2. Dialogue-based Opposite Multiple Choice
-Example:
-John: Are we ahead of schedule?
-Tom: Unfortunately, we’ve taken longer than expected.
-Question:
-A) They are currently behind schedule. (Correct)
-B) They are still ahead of schedule.
-C) They are making better progress than expected.
-D) They are perfectly on schedule without delays.
+Section 2 Examples (for reference style):
+1.
+Emma: The cafeteria is always noisy at lunch.
+Sarah: Really? I prefer a quiet place to eat.
+Question: What does Sarah want?
+a) A place with less noise. (Correct)
+b) A bigger cafeteria.
+c) A place with more people.
+d) A shorter lunch break.
 
-3. Gap-fill Opposite Multiple Choice
-Example:
-You will find the book on the top shelf, not on the ____ shelf.
-a) bottom (Correct)
-b) top
-c) horizontal
-d) above
+2.
+Tom: Should we drive there tonight?
+Mark: No, it’s too dark now. Let’s go in the morning.
+Question: What is Mark suggesting?
+a) They should leave in the morning. (Correct)
+b) They should go tonight.
+c) They should cancel the trip.
+d) They should call a taxi.
 
-4. Underlined Target Word Opposite Multiple Choice
-Example:
-The road ahead was very straight.
-a) It was curved.
-b) It was not curved. (Correct)
-c) It was not very straight.
-d) It was a little busy.
+3.
+Lisa: I think this test is easy.
+Nora: Are you kidding? It’s hard!
+Question: What is Nora’s opinion?
+a) The test is difficult. (Correct)
+b) The test is fair.
+c) The test is long.
+d) The test is short.
 `,
 
   3: `
 Prompt 3: Definitions
 
-Task: Create four definition-based multiple-choice questions using the word [word].
+Task: Create four definition-based multiple-choice questions using “[word].”
 The goal is to test recognition of meaning and correct contextual use.
 
-1. Statement-based Definition Multiple Choice
-Example:
-Steven paid a person to repair his water pipes and installs sinks and toilets.
-a) He paid a plumber. (Correct)
-b) He paid a builder.
-c) He paid a carpenter.
-d) He paid a painter.
+Output Format:
+Section 1: Statement-based Multiple Choice
+Section 2: Dialogue-based Multiple Choice
+Section 3: Gap-fill Multiple Choice
+Section 4: Underlined Target Word Multiple Choice
+Each section must include:
+- One clear example question
+- Four labeled answer choices (a–d)
+- Mark the correct answer with (Correct)
+No extra explanations or context outside the questions.
 
-2. Dialogue-based Definition Multiple Choice
-Example:
-Anna: The sink is leaking again!
-Mark: I’ll call someone to fix it right away.
-Question: Who will Mark probably call?
-a) plumber (Correct)
-b) driver
-c) painter
-d) teacher
+Section 2 Examples (for reference style):
+1.
+Emma: The kitchen sink is leaking again!
+John: I’ll call a plumber.
+Question: What will John probably do next?
+a) Call someone to fix the leak. (Correct)
+b) Call a driver.
+c) Buy a new sink.
+d) Complain to the neighbors.
 
-3. Gap-fill Definition Multiple Choice
-Example:
-A ________ is someone who teaches students at a school.
-a) doctor
-b) teacher (Correct)
-c) student
-d) nurse
+2.
+Mia: I’m going to the pharmacy.
+Noah: Why?
+Mia: To get my medicine.
+Question: Where is Mia going?
+a) To buy medicine. (Correct)
+b) To meet her doctor.
+c) To visit her friend.
+d) To pay her bill.
 
-4. Underlined Target Word Definition Multiple Choice
-Example:
-The movie was very *thrilling*.
-a) not interesting
-b) full of excitement (Correct)
-c) a little boring
-d) extremely long
+3.
+Sophia: The air conditioner isn’t working again.
+Liam: We’ll need a technician.
+Question: What will they probably do?
+a) Call someone to repair it. (Correct)
+b) Turn it off completely.
+c) Buy a fan instead.
+d) Wait for it to cool down.
 `,
 
   4: `
 Prompt 4: Themes
 
-Task: Create four types of vocabulary multiple-choice questions using nouns that fit into clear categories (bank, supermarket, library, church, hospital, stadium).
+Task: Create four types of vocabulary multiple-choice questions using nouns that fit into clear categories (bank, supermarket, library, hospital, etc.).
 The goal is for learners to choose the correct thematic location or context.
 
-1. Statement-based Theme Multiple Choice
-Example:
-Mark sat down in his favorite seat with armrests while reading his book near the window.
-A) He sat on the carpet.
-B) He sat in an armchair. (Correct)
-C) He sat at the couch.
-D) He sat on a large sofa.
+Output Format:
+Section 1: Statement-based Multiple Choice
+Section 2: Dialogue-based Multiple Choice
+Section 3: Gap-fill Multiple Choice
+Section 4: Underlined Target Word Multiple Choice
+Each section must include:
+- One clear example question
+- Four labeled answer choices (a–d)
+- Mark the correct answer with (Correct)
+No extra explanations or context outside the questions.
 
-2. Dialogue-based Theme Multiple Choice
-Example:
-Max: I wanted to buy a new coat, but the prices were too high at the department store.
-Thomas: Maybe you should go to a store that sells items for lower prices.
-Question:
-Where does Thomas suggest to shop?
-a) He should try shopping at a discount store. (Correct)
-b) He suggests shopping at a luxury store.
-c) She should go to an expensive department store.
-d) She should try a vending machine for quick snacks.
+Section 2 Examples (for reference style):
+1.
+Jake: I’d like to withdraw some cash, please.
+Teller: Sure, fill out this form.
+Question: Where is Jake?
+a) At a bank. (Correct)
+b) At a restaurant.
+c) At a school.
+d) At a library.
 
-3. Gap-fill Theme Multiple Choice
-Example:
-Tom set his ____ before going to bed so he wouldn’t be late for work.
-a) alarm clock (Correct)
-b) coat hanger
-c) bedroom closet
-d) electricity bill
+2.
+Maria: Can you check my blood pressure?
+Nurse: Of course. Please sit here.
+Question: Where is this conversation taking place?
+a) In a hospital. (Correct)
+b) In a supermarket.
+c) In a post office.
+d) In a classroom.
+
+3.
+Henry: The shelves are full of fresh bread today.
+Clerk: It’s from the new bakery supplier.
+Question: What type of place are they in?
+a) A supermarket. (Correct)
+b) A hospital.
+c) A gym.
+d) A factory.
 `,
 
   5: `
@@ -197,41 +224,44 @@ Prompt 5: Grammar
 Task: Create four grammar-based multiple-choice questions using a target grammar structure.
 Learners must understand grammatical meaning and form.
 
-1. Statement-based Grammar Multiple Choice
-Example:
-Of all the cars we tested, this one is the most expensive, but it’s also the least reliable.
-Question: What does he say about the car?
-a) It is the least expensive and the least reliable.
-b) It is the most expensive but also the least reliable. (Correct)
-c) It is the most reliable and the least expensive.
-d) It is the least expensive but the most reliable.
+Output Format:
+Section 1: Statement-based Multiple Choice
+Section 2: Dialogue-based Multiple Choice
+Section 3: Gap-fill Multiple Choice
+Section 4: Underlined Target Word Multiple Choice
+Each section must include:
+- One clear example question
+- Four labeled answer choices (a–d)
+- Mark the correct answer with (Correct)
+No extra explanations or context outside the questions.
 
-2. Dialogue-based Grammar Multiple Choice
-Example:
-Mat: Tom, the coach told me that we needed to arrive at practice 15 minutes early tomorrow.
-Tom: I guess we’ll need to leave home earlier than usual.
-Question:
-What did the coach tell Mat?
-a) The coach told him they were arriving late to practice.
-b) The coach told him they had to be there earlier tomorrow. (Correct)
-c) The coach said him to came 15 minutes later.
-d) The coach said them practice was early tomorrow.
+Section 2 Examples (for reference style):
+1.
+Tom: The coach said we need to arrive earlier tomorrow.
+Max: So we should leave home sooner than usual.
+Question: What is Tom suggesting?
+a) They should arrive before the usual time. (Correct)
+b) They can come later than usual.
+c) They don’t have practice tomorrow.
+d) They should cancel practice.
 
-3. Gap-fill Grammar Multiple Choice
-Example:
-Matthew arrived ____ today than he did yesterday.
-a) early
-b) earlyer
-c) earlier (Correct)
-d) more early
+2.
+Sally: I have never tried sushi before.
+Emma: Really? Let’s go tonight!
+Question: What does Sally mean?
+a) She hasn’t eaten sushi before. (Correct)
+b) She eats sushi often.
+c) She dislikes sushi.
+d) She already went last week.
 
-4. Sentence Order Grammar Multiple Choice
-Example:
-Choose the best sentence:
-a) The library is open in 8 p.m.
-b) The library are opens since 8 p.m.
-c) The library opens at 8 a.m. (Correct)
-d) The library is opens from 8 p.m.
+3.
+Paul: If it rains, the picnic will be canceled.
+Tim: Then I hope for sunshine!
+Question: What will happen if it rains?
+a) The picnic will be canceled. (Correct)
+b) The picnic will continue.
+c) They’ll move it indoors.
+d) They’ll delay it by an hour.
 `
 };
 
@@ -270,20 +300,43 @@ app.post("/generate", async (req, res) => {
         {
           role: "system",
           content: `
-You are an expert in language education and assessment design, with extensive experience in developing multiple-choice questions that effectively evaluate language functions, meanings, and structures.
-Generate ESL multiple-choice questions suitable for **upper-intermediate to advanced learners (CEFR B1–C1)**.
+You are a senior Language Assessment Designer specializing in advanced ESL testing and question development.
 
-Please ensure the task includes the following elements:
-- Construct questions that test learners’ understanding of synonyms, language function comprehension, semantic meaning, and grammatical structures.
-- For each language function, develop clear instructions accompanied by illustrative examples that align with best practices in language assessment.
-- Design statement-based multiple-choice questions that present complete, natural sentences and plausible distractors.
-- Specify the target learner proficiency level and the intended educational context to tailor the complexity and relevance of the questions.
-- Maintain clarity, pedagogical soundness, and linguistic accuracy throughout the question design.
+You will generate **multiple-choice questions** (MCQs) for **upper-intermediate to advanced learners (CEFR B2–C2)** in **academic and professional contexts**.  
+Your tasks focus on: vocabulary depth, grammar precision, semantic nuance, and contextual understanding.
 
-Additionally:
-- One correct answer, one clearly wrong, and two plausible distractors.
-- Only Section 3 (Gap-fill) may contain blanks (____).
-- Output must be pedagogically sound and clearly formatted.
+Strict design standards:
+- **Question Type Coverage:** Always include all required sections (Statement-based, Dialogue-based, Gap-fill, and Underlined Target Word).
+- **Register:** Use natural, authentic English (no textbook-like tone).
+- **Difficulty:** Reflect CEFR B2–C2 cognitive demand — include subtle meaning contrasts, collocations, and academic phrasing.
+- **Clarity:** Avoid overly simple words (e.g., “happy,” “big,” “good”). Use advanced yet teachable vocabulary.
+- **Format discipline:** 
+  - Each section must have one example question only.
+  - Each question must have 4 labeled choices (a–d).
+  - Mark the correct choice with “(Correct)” exactly.
+  - No explanations, notes, or summaries beyond the questions.
+
+Dialogue design rules:
+- Write natural two-person conversations (male and female names are fine, keep tone formal-casual).
+- Dialogue-based comprehension questions must sound natural and realistic, e.g.:
+  - “What is Tom suggesting?”
+  - “What will Jake probably do next?”
+  - “What problem are they discussing?”
+  - “Where is this conversation taking place?”
+- Avoid meta or interpretive questions such as:
+  - “What does Emma mean by ‘engaging’?”
+  - “What is the meaning of the underlined word?”
+  - “Which word means the same as…?”
+
+Content relevance:
+- Grammar prompts: Use accurate examples of tense, aspect, comparatives, conditionals, or relative clauses.
+- Synonyms & opposites: Use lexical items typical of academic or workplace English (e.g., “mitigate / alleviate,” “scarce / abundant”).
+- Definitions: Center on precise usage or occupational terminology.
+- Themes: Keep realism — bank, hospital, university, meeting, workplace, etc.
+
+Overall constraints:
+- Maintain pedagogical clarity, linguistic authenticity, and assessment fairness.
+- Output **only** the formatted questions and choices. No commentary or metadata.
 `
         },
         { role: "user", content: userPrompt }
@@ -311,6 +364,7 @@ app.get("/", (_, res) => res.sendFile(path.join(__dirname, "index.html")));
 // ---------------------------------------------------------------------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
